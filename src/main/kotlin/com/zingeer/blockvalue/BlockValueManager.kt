@@ -17,7 +17,6 @@ object BlockValueManager {
 
     fun enable(plugin: Plugin) {
         BlockValueListener.register(plugin)
-
         loadDefaultConverter()
     }
 
