@@ -20,14 +20,19 @@ object BlockValueFactory {
         val type = Class.forName(
             String(ByteBufUtil.getBytes(byteBuf.readBytes(size)), Charset.forName("UTF-8"))
         )
-        return types[type]?.deserialize(byteBuf) ?: error("Type not found: $type")
+        val length = byteBuf.readInt()
+        return types[type]?.deserialize(byteBuf.readBytes(length)) ?: error("Type not found: $type")
     }
 
     @JvmName("deserialize_typed")
     inline fun <reified T> deserialize(byteBuf: ByteBuf): T {
         val size = byteBuf.readInt()
-        byteBuf.readBytes(size)
-        return (types[T::class.java]?.deserialize(byteBuf) ?: error("Type not found: ${T::class.java}")) as T
+        val type = Class.forName(
+            String(ByteBufUtil.getBytes(byteBuf.readBytes(size)), Charset.forName("UTF-8"))
+        )
+        val length = byteBuf.readInt()
+        return types[T::class.java]?.deserialize(byteBuf.readBytes(length)) as T
+            ?: error("Type not found: ${T::class.java}")
     }
 
     fun serialize(value: Any): ByteBuf {
@@ -37,7 +42,9 @@ object BlockValueFactory {
         return Unpooled.buffer().apply {
             writeInt(typeInBytes.size)
             writeBytes(typeInBytes)
-            writeBytes(builder.serialize(value))
+            val bytes = ByteBufUtil.getBytes(builder.serialize(value))
+            writeInt(bytes.size)
+            writeBytes(bytes)
         }
     }
 }

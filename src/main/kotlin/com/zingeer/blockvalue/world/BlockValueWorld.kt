@@ -3,6 +3,7 @@ package com.zingeer.blockvalue.world
 import com.zingeer.blockvalue.BlockValueFactory
 import com.zingeer.blockvalue.BlockValueManager
 import com.zingeer.blockvalue.utils.Compression
+import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -55,7 +56,7 @@ class BlockValueWorld(
         }
         LoggerFactory.getLogger("BlockValue").info("Save chunk - ${chunk.x} ${chunk.z}")
         GlobalScope.launch {
-            file.writeBytes(Compression.compress(buf.array()))
+            file.writeBytes(Compression.compress(ByteBufUtil.getBytes(buf)))
         }
     }
 
