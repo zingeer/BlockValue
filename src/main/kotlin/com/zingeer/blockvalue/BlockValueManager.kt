@@ -8,6 +8,7 @@ import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
 import org.bukkit.Location
+import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 import java.nio.charset.Charset
 
@@ -30,15 +31,16 @@ object BlockValueManager {
     }
 
     private fun loadDefaultConverter() {
-        BlockValueFactory.registry(object : BlockValueConverter<Int> {
-            override fun serialize(src: Int): ByteBuf {
-                return Unpooled.buffer().writeInt(src)
-            }
+        BlockValueFactory
+            .registry(object : BlockValueConverter<Int> {
+                override fun serialize(src: Int): ByteBuf {
+                    return Unpooled.buffer().writeInt(src)
+                }
 
-            override fun deserialize(byteBuf: ByteBuf): Int {
-                return byteBuf.readInt()
-            }
-        }, Integer::class.java)
+                override fun deserialize(byteBuf: ByteBuf): Int {
+                    return byteBuf.readInt()
+                }
+            }, Integer::class.java)
             .registry(object : BlockValueConverter<String> {
                 override fun serialize(src: String): ByteBuf {
                     val string = src.encodeToByteArray()
@@ -58,6 +60,15 @@ object BlockValueManager {
                     return byteBuf.readDouble()
                 }
             }, Double::class.java)
+            .registry(object : BlockValueConverter<ItemStack> {
+                override fun serialize(src: ItemStack): ByteBuf {
+                    return Unpooled.buffer().writeBytes(src.serializeAsBytes())
+                }
+
+                override fun deserialize(byteBuf: ByteBuf): ItemStack {
+                    return ItemStack.deserializeBytes(byteBuf.array())
+                }
+            }, ItemStack::class.java)
     }
 
     var Location.value: Any?
