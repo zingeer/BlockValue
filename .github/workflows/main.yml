@@ -1,0 +1,50 @@
+name: Release BlockValue to JitPack
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+          uses: actions/checkout@v2
+
+      - name: Set output
+          id: vars
+          run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
+      - name: Set up JDK 15
+          id: get_tag
+          uses: actions/setup-java@v1
+          with:
+            java-version: 15
+
+      - name: Build with Gradle
+          run: ./gradlew build
+
+      - name: Create release
+          id: create_release
+          uses: svenstaro/upload-release-action@v2
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ github.ref }}
+            file: build/libs/BlockValue.jar
+            release_name: Release ${{ steps.vars.outputs.tag }}
+            body: |
+              #### Release ${{ steps.vars.outputs.tag }}
+              Dependency:
+              ```kotlin
+              repositories {
+                  maven ("https://jitpack.io/")
+              }
+              dependencies {
+                  implementation("com.github.zingeer", "BlockValue", "${{ steps.vars.outputs.tag }}")
+              }
+              ```
+            prerelease: false
