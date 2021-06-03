@@ -1,0 +1,4 @@
+name: BlockValue
+version: 1.0-SNAPSHOT
+main: com.zingeer.blockvalue.Plugin
+api-version: 1.16
