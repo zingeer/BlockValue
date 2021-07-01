@@ -1,4 +1,4 @@
-package com.zingeer.blockvalue
+package com.github.zingeer.blockvalue
 
 import org.bukkit.plugin.java.JavaPlugin
 

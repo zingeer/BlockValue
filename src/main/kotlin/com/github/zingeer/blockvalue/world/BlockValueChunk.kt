@@ -1,4 +1,4 @@
-package com.zingeer.blockvalue.world
+package com.github.zingeer.blockvalue.world
 
 import org.bukkit.Location
 import org.bukkit.block.Block

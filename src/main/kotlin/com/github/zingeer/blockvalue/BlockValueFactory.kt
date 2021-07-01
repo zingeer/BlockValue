@@ -1,4 +1,4 @@
-package com.zingeer.blockvalue
+package com.github.zingeer.blockvalue
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufUtil

@@ -1,8 +1,8 @@
-package com.zingeer.blockvalue.world
+package com.github.zingeer.blockvalue.world
 
-import com.zingeer.blockvalue.BlockValueFactory
-import com.zingeer.blockvalue.BlockValueManager
-import com.zingeer.blockvalue.utils.Compression
+import com.github.zingeer.blockvalue.BlockValueFactory
+import com.github.zingeer.blockvalue.BlockValueManager
+import com.github.zingeer.blockvalue.utils.Compression
 import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
 import kotlinx.coroutines.DelicateCoroutinesApi

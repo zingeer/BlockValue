@@ -1,4 +1,4 @@
-package com.zingeer.blockvalue.utils
+package com.github.zingeer.blockvalue.utils
 
 import java.io.ByteArrayOutputStream
 import java.util.zip.Deflater
