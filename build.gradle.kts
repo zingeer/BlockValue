@@ -19,17 +19,13 @@ dependencies {
 }
 
 tasks {
-    compileKotlin { kotlinOptions.jvmTarget = "15" }
-    compileJava {
-        sourceCompatibility = "15"
-        targetCompatibility = "15"
-        options.encoding = "UTF-8"
-    }
-    jar {
-        doFirst {
-            from({
-                configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
-            })
-        }
-    }
+    compileKotlin { kotlinOptions.jvmTarget = "17" }
+    compileJava { options.encoding = "UTF-8" }
+//    jar {
+//        doFirst {
+//            from({
+//                configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
+//            })
+//        }
+//    }
 }
