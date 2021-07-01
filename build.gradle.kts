@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.5.0"
+    kotlin("jvm") version "1.5.10"
     maven
 }
 
@@ -19,20 +19,17 @@ dependencies {
 }
 
 tasks {
-    compileKotlin { kotlinOptions.jvmTarget = "1.8" }
+    compileKotlin { kotlinOptions.jvmTarget = "15" }
     compileJava {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = "15"
+        targetCompatibility = "15"
         options.encoding = "UTF-8"
     }
     jar {
-        //val out = project.findProperty("out")?.toString() ?: "testServer/plugins"
-        //destinationDirectory.set(File("$rootDir/$out"))
         doFirst {
             from({
                 configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
             })
         }
-        exclude("META-INF/MANIFEST.MF", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
     }
 }
