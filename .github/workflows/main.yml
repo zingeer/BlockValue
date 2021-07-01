@@ -15,11 +15,11 @@ jobs:
         id: vars
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
-      - name: Set up JDK 17
+      - name: Set up JDK 16
         id: get_tag
         uses: actions/setup-java@v1
         with:
-          java-version: 17
+          java-version: 16
       - name: Build with Gradle
         run: ./gradlew build
 

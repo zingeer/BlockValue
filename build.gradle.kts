@@ -19,7 +19,7 @@ dependencies {
 }
 
 tasks {
-    compileKotlin { kotlinOptions.jvmTarget = "17" }
+    compileKotlin { kotlinOptions.jvmTarget = "16" }
     compileJava { options.encoding = "UTF-8" }
 //    jar {
 //        doFirst {
